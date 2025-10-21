@@ -1,7 +1,78 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { MapPin, Phone, Mail, Clock } from "lucide-react"
+import type { SVGProps } from "react"
+
+function MapPinIcon({ className, ...props }: SVGProps<SVGSVGElement>) {
+  return (
+    <svg
+      className={className}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      {...props}
+    >
+      <path d="M12 21s-6-5.686-6-10a6 6 0 1 1 12 0c0 4.314-6 10-6 10Z" />
+      <circle cx="12" cy="11" r="2" />
+    </svg>
+  )
+}
+
+function PhoneIcon({ className, ...props }: SVGProps<SVGSVGElement>) {
+  return (
+    <svg
+      className={className}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      {...props}
+    >
+      <path d="M22 16.92v2a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.62-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4 1.08h2a2 2 0 0 1 2 1.72c.14 1.19.46 2.34.95 3.42a2 2 0 0 1-.45 2.11L7 9a16 16 0 0 0 8 8l.67-1a2 2 0 0 1 2.11-.45c1.08.49 2.23.81 3.42.95A2 2 0 0 1 22 16.92Z" />
+    </svg>
+  )
+}
+
+function MailIcon({ className, ...props }: SVGProps<SVGSVGElement>) {
+  return (
+    <svg
+      className={className}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      {...props}
+    >
+      <path d="M4 4h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2Z" />
+      <path d="m22 6-10 7L2 6" />
+    </svg>
+  )
+}
+
+function ClockIcon({ className, ...props }: SVGProps<SVGSVGElement>) {
+  return (
+    <svg
+      className={className}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      {...props}
+    >
+      <circle cx="12" cy="12" r="10" />
+      <path d="M12 6v6l4 2" />
+    </svg>
+  )
+}
 
 export default function Contact() {
   const [isVisible, setIsVisible] = useState(false)
@@ -53,7 +124,7 @@ export default function Contact() {
             <div className="bg-card rounded-lg p-6 shadow-lg hover:shadow-xl transition-shadow">
               <div className="flex items-start gap-4">
                 <div className="bg-primary/10 p-3 rounded-lg">
-                  <MapPin className="h-6 w-6 text-primary" />
+                  <MapPinIcon className="h-6 w-6 text-primary" />
                 </div>
                 <div>
                   <h3 className="font-semibold text-lg mb-2">Adres</h3>
@@ -69,7 +140,7 @@ export default function Contact() {
             <div className="bg-card rounded-lg p-6 shadow-lg hover:shadow-xl transition-shadow">
               <div className="flex items-start gap-4">
                 <div className="bg-primary/10 p-3 rounded-lg">
-                  <Phone className="h-6 w-6 text-primary" />
+                  <PhoneIcon className="h-6 w-6 text-primary" />
                 </div>
                 <div>
                   <h3 className="font-semibold text-lg mb-2">Telefon</h3>
@@ -84,7 +155,7 @@ export default function Contact() {
             <div className="bg-card rounded-lg p-6 shadow-lg hover:shadow-xl transition-shadow">
               <div className="flex items-start gap-4">
                 <div className="bg-primary/10 p-3 rounded-lg">
-                  <Mail className="h-6 w-6 text-primary" />
+                  <MailIcon className="h-6 w-6 text-primary" />
                 </div>
                 <div>
                   <h3 className="font-semibold text-lg mb-2">E-posta</h3>
@@ -101,7 +172,7 @@ export default function Contact() {
             <div className="bg-card rounded-lg p-6 shadow-lg hover:shadow-xl transition-shadow">
               <div className="flex items-start gap-4">
                 <div className="bg-primary/10 p-3 rounded-lg">
-                  <Clock className="h-6 w-6 text-primary" />
+                  <ClockIcon className="h-6 w-6 text-primary" />
                 </div>
                 <div>
                   <h3 className="font-semibold text-lg mb-2">Çalışma Saatleri</h3>

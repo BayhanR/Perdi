@@ -1,7 +1,65 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { Truck, Wrench, Ruler, Sparkles, Clock, Shield } from "lucide-react"
+import type { SVGProps } from "react"
+
+function TruckIcon({ className, ...props }: SVGProps<SVGSVGElement>) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
+      <path d="M10 17h4V5H2v12h3" />
+      <path d="M14 17h2a2 2 0 0 0 2-2v-3h3l-3-4h-2" />
+      <circle cx="5" cy="17" r="2" />
+      <circle cx="17" cy="17" r="2" />
+    </svg>
+  )
+}
+
+function WrenchIcon({ className, ...props }: SVGProps<SVGSVGElement>) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
+      <path d="M14.7 6.3a4 4 0 1 0-5.66 5.66l-.7.7a2 2 0 1 0 2.83 2.83l.7-.7A4 4 0 0 0 14.7 6.3Z" />
+      <path d="M9 13l-4 4" />
+    </svg>
+  )
+}
+
+function RulerIcon({ className, ...props }: SVGProps<SVGSVGElement>) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
+      <path d="m16 2 6 6L8 22l-6-6Z" />
+      <path d="M7 7l3 3" />
+      <path d="M10 10l3 3" />
+      <path d="M13 13l3 3" />
+    </svg>
+  )
+}
+
+function SparklesIcon({ className, ...props }: SVGProps<SVGSVGElement>) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
+      <path d="M12 3l2 5 5 2-5 2-2 5-2-5-5-2 5-2 2-5Z" />
+      <path d="M5 3l1 2 2 1-2 1-1 2-1-2-2-1 2-1 1-2Z" />
+      <path d="M19 14l1 2 2 1-2 1-1 2-1-2-2-1 2-1 1-2Z" />
+    </svg>
+  )
+}
+
+function ClockIcon({ className, ...props }: SVGProps<SVGSVGElement>) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
+      <circle cx="12" cy="12" r="10" />
+      <path d="M12 6v6l4 2" />
+    </svg>
+  )
+}
+
+function ShieldIcon({ className, ...props }: SVGProps<SVGSVGElement>) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
+      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z" />
+    </svg>
+  )
+}
 
 export default function Services() {
   const [isVisible, setIsVisible] = useState(false)
@@ -26,32 +84,32 @@ export default function Services() {
 
   const services = [
     {
-      icon: Ruler,
+      icon: RulerIcon,
       title: "Ücretsiz Ölçüm",
       description: "Uzman ekibimiz mekanınıza gelerek profesyonel ölçüm hizmeti sunar.",
     },
     {
-      icon: Sparkles,
+      icon: SparklesIcon,
       title: "Tasarım Danışmanlığı",
       description: "Mekanınıza en uygun perde ve kumaş seçiminde size rehberlik ederiz.",
     },
     {
-      icon: Wrench,
+      icon: WrenchIcon,
       title: "Profesyonel Montaj",
       description: "Deneyimli montaj ekibimiz ile kusursuz kurulum garantisi.",
     },
     {
-      icon: Truck,
+      icon: TruckIcon,
       title: "Hızlı Teslimat",
       description: "Siparişlerinizi özenle hazırlayıp adresinize güvenle teslim ediyoruz.",
     },
     {
-      icon: Clock,
+      icon: ClockIcon,
       title: "Zamanında Hizmet",
       description: "Belirlenen tarih ve saatte eksiksiz hizmet anlayışı.",
     },
     {
-      icon: Shield,
+      icon: ShieldIcon,
       title: "Garanti",
       description: "Tüm ürün ve hizmetlerimizde kapsamlı garanti güvencesi.",
     },

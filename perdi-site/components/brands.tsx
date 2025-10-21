@@ -1,7 +1,24 @@
 "use client"
 
-import brands from "./brands-data.json"
 import Image from "next/image"
+
+const brands = [
+  {
+    id: 1,
+    name: "brillant logo",
+    src: "/brands/brillant-logo.png"
+  },
+  {
+    id: 2,
+    name: "linens logo removebg preview",
+    src: "/brands/linens-logo-removebg-preview.png"
+  },
+  {
+    id: 3,
+    name: "tac logo",
+    src: "/brands/tac-logo.png"
+  }
+]
 
 export default function Brands() {
   return (
