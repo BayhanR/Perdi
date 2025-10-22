@@ -50,7 +50,7 @@ export default function GaleriPage() {
       <div className="bg-primary text-primary-foreground py-14">
         <div className="container mx-auto px-4">
           <Link
-            href="/"
+            href={`${process.env.NEXT_PUBLIC_BASE_PATH || ''}/`}
             className="inline-flex items-center gap-2 text-primary-foreground/80 hover:text-primary-foreground mb-6 transition-colors"
           >
             <svg

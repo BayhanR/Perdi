@@ -6,17 +6,17 @@ const brands = [
   {
     id: 1,
     name: "brillant logo",
-    src: "/brands/brillant-logo.png"
+    src: `${process.env.NEXT_PUBLIC_BASE_PATH || ''}/brands/brillant-logo.png`
   },
   {
     id: 2,
     name: "linens logo removebg preview",
-    src: "/brands/linens-logo-removebg-preview.png"
+    src: `${process.env.NEXT_PUBLIC_BASE_PATH || ''}/brands/linens-logo-removebg-preview.png`
   },
   {
     id: 3,
     name: "tac logo",
-    src: "/brands/tac-logo.png"
+    src: `${process.env.NEXT_PUBLIC_BASE_PATH || ''}/brands/tac-logo.png`
   }
 ]
 

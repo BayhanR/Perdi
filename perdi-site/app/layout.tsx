@@ -25,11 +25,11 @@ export default function RootLayout({
   return (
     <html lang="tr">
       <head>
-        <link rel="icon" href="/favicon.png" type="image/png" />
+        <link rel="icon" href={`${process.env.NEXT_PUBLIC_BASE_PATH || ''}/favicon.png`} type="image/png" />
       </head>
       <body className={`${lato.variable} font-sans antialiased`}>
         {children}
-        <Analytics />
+        {process.env.NEXT_PUBLIC_ENABLE_ANALYTICS === '1' && <Analytics />}
       </body>
     </html>
   )

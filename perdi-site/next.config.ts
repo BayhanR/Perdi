@@ -1,13 +1,35 @@
 import type { NextConfig } from "next";
+const isProd = process.env.NODE_ENV === 'production'
 
 const nextConfig: NextConfig = {
+  // Uygulama alt dizinde (subdirectory) sadece production'da çalışsın
+  basePath: isProd ? '/perdi' : undefined,
   productionBrowserSourceMaps: false,
-  webpack: (config) => {
-    // Kaynak haritaları tamamen kapat (bozuk .map kaynaklı hataları önler)
-    ;(config as any).devtool = false
+  env: {
+    NEXT_PUBLIC_BASE_PATH: isProd ? '/perdi' : '',
+    NEXT_PUBLIC_ENABLE_ANALYTICS: process.env.VERCEL ? '1' : '0',
+  },
 
-    // source-map-loader kullanan kuralları devre dışı bırak / filtrele
-    // Özellikle node_modules içindeki paketlerin .map dosyalarını okumasını engelle
+  images: {
+    // Prod'da image optimizer 400 veriyordu; doğrudan statik dosyaları kullan
+    unoptimized: true,
+  },
+
+  async redirects() {
+    if (!isProd) return []
+    return [
+      {
+        source: '/',
+        destination: '/perdi',
+        permanent: false,
+        basePath: false,
+      },
+    ]
+  },
+
+  webpack: (config) => {
+    (config as any).devtool = false
+
     config.module.rules = config.module.rules.map((rule: any) => {
       if (rule && typeof rule === "object" && "oneOf" in rule) {
         rule.oneOf = (rule.oneOf as any[]).map((one) => {
@@ -17,7 +39,6 @@ const nextConfig: NextConfig = {
               return !(loader && loader.includes("source-map-loader"))
             })
           }
-          // Ayrıca lucide-react gibi paketleri source map işleminden hariç tut
           if (!(one as any).exclude) {
             ;(one as any).exclude = [/node_modules\/lucide-react/]
           } else if (Array.isArray((one as any).exclude)) {
@@ -29,7 +50,6 @@ const nextConfig: NextConfig = {
       return rule
     })
 
-    // Source map uyarılarını yok say (bazı ortamlarda hata olarak değerlendirilebiliyor)
     config.ignoreWarnings = [
       ...(config.ignoreWarnings || []),
       { module: /node_modules\\lucide-react\\.*\.js$/, message: /source map/i },
@@ -40,4 +60,4 @@ const nextConfig: NextConfig = {
   },
 }
 
-export default nextConfig;
+export default nextConfig

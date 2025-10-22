@@ -10,7 +10,7 @@ export default function Logo({ className = "", size = "normal" }: LogoProps) {
   return (
     <div className={`flex items-center gap-2 ${className}`}>
       <img
-        src="/logob.png"
+        src={`${process.env.NEXT_PUBLIC_BASE_PATH || ''}/logob.png`}
         alt="By Tezer Perde Logo"
         width={imgWidth}
         height={imgHeight}
