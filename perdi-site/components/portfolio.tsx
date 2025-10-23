@@ -83,11 +83,11 @@ export default function Portfolio() {
               {duplicatedItems.map((item, index) => (
                 <Link
                   key={`${item.id}-${index}`}
-                  href={`${process.env.NEXT_PUBLIC_BASE_PATH || ''}/galeri`}
+                  href="/galeri"
                   className="group relative flex-shrink-0 w-80 h-80 overflow-hidden rounded-lg shadow-lg hover:shadow-2xl transition-all duration-500 hover:scale-105 cursor-pointer"
                 >
                   <Image
-                    src={item.src}
+                    src={`${process.env.NEXT_PUBLIC_BASE_PATH || ''}${item.src}`}
                     alt={item.name}
                     fill
                     className="object-cover transition-transform duration-500 group-hover:scale-110"
@@ -102,7 +102,7 @@ export default function Portfolio() {
         </div>
         <div className="text-center mt-12">
           <Link
-            href={`${process.env.NEXT_PUBLIC_BASE_PATH || ''}/galeri`}
+            href="/galeri"
             className="inline-flex items-center gap-2 px-8 py-4 bg-primary text-primary-foreground rounded-full font-semibold hover:bg-primary/90 transition-all hover:scale-105 shadow-lg"
           >
             Tüm Projeleri Görüntüle

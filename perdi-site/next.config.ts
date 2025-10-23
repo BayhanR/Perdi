@@ -18,6 +18,12 @@ const nextConfig: NextConfig = {
   async redirects() {
     if (!isProd) return []
     return [
+      // basePath zaten prod’da '/perdi'; bu yüzden sadece hedef rota veriyoruz
+      {
+        source: '/portfolio',
+        destination: '/galeri',
+        permanent: false,
+      },
       {
         source: '/',
         destination: '/perdi',

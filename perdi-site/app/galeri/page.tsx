@@ -50,7 +50,7 @@ export default function GaleriPage() {
       <div className="bg-primary text-primary-foreground py-14">
         <div className="container mx-auto px-4">
           <Link
-            href={`${process.env.NEXT_PUBLIC_BASE_PATH || ''}/`}
+            href="/"
             className="inline-flex items-center gap-2 text-primary-foreground/80 hover:text-primary-foreground mb-6 transition-colors"
           >
             <svg
@@ -86,7 +86,7 @@ export default function GaleriPage() {
               onClick={() => setSelectedImage(item.id)}
             >
               <Image
-                src={item.src}
+                src={`${process.env.NEXT_PUBLIC_BASE_PATH || ''}${item.src}`}
                 alt={"Galeri Görseli"}
                 fill
                 className="object-cover transition-transform duration-500 group-hover:scale-110"
@@ -123,7 +123,7 @@ export default function GaleriPage() {
           </button>
           <div className="relative w-full max-w-5xl aspect-video">
             <Image
-              src={items.find((item) => item.id === selectedImage)?.src || ""}
+              src={`${process.env.NEXT_PUBLIC_BASE_PATH || ''}${items.find((item) => item.id === selectedImage)?.src || ""}`}
               alt={"Galeri Görseli"}
               fill
               className="object-contain"
