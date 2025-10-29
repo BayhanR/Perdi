@@ -2,11 +2,10 @@ import type { NextConfig } from "next";
 const isProd = process.env.NODE_ENV === 'production'
 
 const nextConfig: NextConfig = {
-  // Uygulama alt dizinde (subdirectory) sadece production'da çalışsın
-  basePath: isProd ? '/perdi' : undefined,
+  // Artık kök dizinde (/) çalışacak
   productionBrowserSourceMaps: false,
   env: {
-    NEXT_PUBLIC_BASE_PATH: isProd ? '/perdi' : '',
+    NEXT_PUBLIC_BASE_PATH: '',
     NEXT_PUBLIC_ENABLE_ANALYTICS: process.env.VERCEL ? '1' : '0',
   },
 
@@ -16,19 +15,12 @@ const nextConfig: NextConfig = {
   },
 
   async redirects() {
-    if (!isProd) return []
+    // Hem dev hem prod: eski /portfolio adresini /galeri'ye yönlendir
     return [
-      // basePath zaten prod’da '/perdi'; bu yüzden sadece hedef rota veriyoruz
       {
         source: '/portfolio',
         destination: '/galeri',
         permanent: false,
-      },
-      {
-        source: '/',
-        destination: '/perdi',
-        permanent: false,
-        basePath: false,
       },
     ]
   },
