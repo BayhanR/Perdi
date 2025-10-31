@@ -1,0 +1,20 @@
+# tezerperde.com robots.txt
+User-agent: *
+Allow: /
+Allow: /galeri
+Allow: /portfolio
+Allow: /images/
+Allow: /*.js$
+Allow: /*.css$
+
+# Block access to specific files and directories
+Disallow: /api/
+Disallow: /.next/
+Disallow: /_next/
+Disallow: /static/
+
+# Allow search engines to access sitemap
+Sitemap: https://tezerperde.com/sitemap.xml
+
+# Crawl delay for all bots
+Crawl-delay: 1
