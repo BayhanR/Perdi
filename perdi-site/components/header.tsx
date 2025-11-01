@@ -98,6 +98,12 @@ export default function Header() {
             >
               Markalar
             </button>
+            <a
+              href="/fiyat-teklifi"
+              className="text-primary-foreground hover:text-primary-foreground/80 transition-colors font-medium bg-primary-foreground/10 px-4 py-2 rounded-lg hover:bg-primary-foreground/20"
+            >
+              Fiyat Teklifi
+            </a>
             <button
               onClick={() => scrollToSection("iletisim")}
               className="text-primary-foreground hover:text-primary-foreground/80 transition-colors font-medium"
@@ -144,6 +150,12 @@ export default function Header() {
               >
                 Markalar
               </button>
+              <a
+                href="/fiyat-teklifi"
+                className="text-primary-foreground hover:text-primary-foreground/80 transition-colors font-medium text-left bg-primary-foreground/10 px-4 py-2 rounded-lg hover:bg-primary-foreground/20"
+              >
+                Fiyat Teklifi
+              </a>
               <button
                 onClick={() => scrollToSection("iletisim")}
                 className="text-primary-foreground hover:text-primary-foreground/80 transition-colors font-medium text-left"

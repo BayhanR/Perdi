@@ -42,12 +42,18 @@ export default function Hero() {
               isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
             }`}
           >
+            <a
+              href="/fiyat-teklifi"
+              className="bg-primary text-primary-foreground px-8 py-4 rounded-lg font-semibold hover:bg-primary/90 transition-all hover:scale-105 text-center"
+            >
+              Fiyat Teklifi Alın
+            </a>
             <button
               onClick={() => {
                 const element = document.getElementById("portfolyo")
                 element?.scrollIntoView({ behavior: "smooth" })
               }}
-              className="bg-primary text-primary-foreground px-8 py-4 rounded-lg font-semibold hover:bg-primary/90 transition-all hover:scale-105"
+              className="bg-background text-foreground border-2 border-primary px-8 py-4 rounded-lg font-semibold hover:bg-primary hover:text-primary-foreground transition-all hover:scale-105"
             >
               Portfolyomuzu İnceleyin
             </button>
