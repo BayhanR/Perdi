@@ -34,3 +34,29 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+## Ortam Değişkenleri (.env)
+
+Aşağıdaki değişkenleri `.env.local` dosyanıza ekleyin (veya barındırma ortamında Environment Variables olarak tanımlayın):
+
+```
+# Site URL'iniz (OG, canonical, sitemap, robots için kullanılır)
+NEXT_PUBLIC_SITE_URL=https://tezerperde.com
+
+# Site alt dizinde çalışacaksa (örn: /perdi). Kökteyse boş bırakın
+NEXT_PUBLIC_BASE_PATH=
+
+# Resend e-posta ayarları
+RESEND_API_KEY=your_resend_api_key_here
+RESEND_FROM="Teklif <onboarding@resend.dev>"
+# Tek bir adres veya virgülle ayırarak birden fazla adres girebilirsiniz
+RESEND_TO=info@alanadiniz.com
+
+# Opsiyonel
+NEXT_TELEMETRY_DISABLED=1
+```
+
+Notlar:
+- `app/api/quote/route.ts` endpoint’i bu değişkenleri kullanarak Resend üzerinden e-posta gönderir.
+- `RESEND_FROM` için doğrulanmış bir domain kullanmanız önerilir (SPF/DKIM).
+- Alt dizinle yayın yapacaksanız `next.config.ts` içindeki `basePath` otomatik olarak `NEXT_PUBLIC_BASE_PATH`’i kullanır.

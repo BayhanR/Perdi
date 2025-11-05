@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
+import Link from "next/link"
 
 export default function Hero() {
   const [isVisible, setIsVisible] = useState(false)
@@ -42,12 +43,12 @@ export default function Hero() {
               isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
             }`}
           >
-            <a
+            <Link
               href="/fiyat-teklifi"
-              className="bg-primary text-primary-foreground px-8 py-4 rounded-lg font-semibold hover:bg-primary/90 transition-all hover:scale-105 text-center"
+              className="bg-primary text-primary-foreground px-8 py-4 rounded-lg font-semibold hover:bg-primary/90 transition-all hover:scale-105 text-center focus:outline-none focus-visible:outline-none focus:ring-0"
             >
               Fiyat Teklifi Alın
-            </a>
+            </Link>
             <button
               onClick={() => {
                 const element = document.getElementById("portfolyo")

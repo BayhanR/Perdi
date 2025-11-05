@@ -1,5 +1,5 @@
 "use client"
-import CurtainConfigurator from "@/components/curtain-configurator"
+import CurtainConfigurator from "@/components/konfigurator/curtain-configurator"
 
 export default function Home() {
   return (

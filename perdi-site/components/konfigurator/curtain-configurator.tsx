@@ -2,11 +2,13 @@
 
 import { useState } from "react"
 import Link from "next/link"
+import Image from "next/image"
 import ProductSelector from "@/components/konfigurator/product-selector"
 import ProductDisplay from "@/components/konfigurator/product-display"
 import MeasurementSection from "@/components/konfigurator/measurement-section"
 import CartSummary from "@/components/konfigurator/cart-summary"
 import QuoteForm from "@/components/konfigurator/quote-form"
+import { Toaster, toast } from "sonner"
 
 type CurtainType = "Tül" | "Güneşlik" | "Fon" | "Stor" | "Jaluzi" | "Blackout" | "Plise"
 
@@ -112,7 +114,10 @@ export default function CurtainConfigurator() {
       price: Math.round(averagePrice),
     }
     setCartItems([...cartItems, newItem])
-    setShowCart(true)
+    toast.success("Sepete eklendi", {
+      description: `${selectedProduct} — ${width}×${height} cm`,
+      duration: 1600,
+    })
   }
 
   const handleRemoveFromCart = (id: string) => {
@@ -121,11 +126,11 @@ export default function CurtainConfigurator() {
 
   return (
     <div className="min-h-screen bg-linear-to-br from-white via-slate-50 to-slate-100">
-      <header className="border-b border-slate-200 bg-white/80 backdrop-blur-sm sticky top-0 z-40">
-        <div className="w-full px-3 py-3 flex justify-between items-center">
+      <header className="fixed top-0 left-0 right-0 border-b border-slate-200 bg-white text-slate-900 z-40">
+        <div className="w-full px-2 lg:px-3 py-2 flex justify-between items-center relative h-14">
           <Link
             href="/"
-            className="inline-flex items-center gap-2 px-4 py-2 bg-slate-900 hover:bg-slate-800 text-white rounded-full text-sm font-medium transition-all hover:gap-3"
+            className="inline-flex items-center gap-2 px-4 py-2 bg-primary hover:bg-primary/90 text-white rounded-full text-sm font-medium transition-all hover:gap-3"
           >
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
@@ -134,7 +139,7 @@ export default function CurtainConfigurator() {
           </Link>
           <button
             onClick={() => setShowCart(!showCart)}
-            className="relative px-4 py-2 bg-slate-900 text-white rounded-full text-sm font-medium hover:bg-slate-800 transition-colors"
+            className="relative px-4 py-2 bg-primary text-white rounded-full text-sm font-medium hover:bg-primary/90 transition-colors"
           >
             Sepet
             {cartItems.length > 0 && (
@@ -143,8 +148,19 @@ export default function CurtainConfigurator() {
               </span>
             )}
           </button>
+
+          {/* Orta: Taç logosu + kalitesiyle */}
+          <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+            <div className="flex items-center gap-2">
+              <Image src="/brands/tac-logo.png" alt="Taç" width={72} height={24} className="h-6 w-auto" priority />
+              <span className="text-slate-900 font-semibold tracking-wide">kalitesiyle</span>
+            </div>
+          </div>
         </div>
       </header>
+
+      {/* Header yüksekliği kadar boşluk bırak */}
+      <div className="h-14" />
 
       <div className="w-full px-2 lg:px-4 py-2">
         {/* Tek Sayfa Layout - Resim Sol, Seçenekler Sağ, Fiyat Orta */}
@@ -183,9 +199,18 @@ export default function CurtainConfigurator() {
         </div>
       </div>
 
-      {showCart && <CartSummary items={cartItems} onClose={() => setShowCart(false)} onRemove={handleRemoveFromCart} />}
+      {showCart && (
+        <CartSummary
+          items={cartItems}
+          onClose={() => setShowCart(false)}
+          onRemove={handleRemoveFromCart}
+          onRequestQuote={() => setShowQuoteForm(true)}
+        />
+      )}
 
       {showQuoteForm && <QuoteForm cartItems={cartItems} onClose={() => setShowQuoteForm(false)} />}
+      {/* Toast container */}
+      <Toaster richColors position="top-center" />
     </div>
   )
 }

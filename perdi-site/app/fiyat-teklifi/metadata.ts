@@ -20,6 +20,8 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Fiyat Teklifi Al | Tezer Perde",
     description: "Online perde fiyat hesaplama ve teklif alma sistemi.",
+    url: "/fiyat-teklifi",
   },
+  alternates: { canonical: "/fiyat-teklifi" },
 }
 

@@ -6,5 +6,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Galeri - Tezer Perde | Ürün Kataloğumuz",
     description: "Tezer Perde'nin geniş ürün yelpazesini keşfedin. Stor perde, zebra perde, fon perde ve daha fazlası.",
-  }
+    url: "/galeri",
+  },
+  alternates: { canonical: "/galeri" },
 }

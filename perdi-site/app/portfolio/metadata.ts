@@ -6,5 +6,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Portfolio - Tezer Perde | Çalışmalarımız",
     description: "Tezer Perde'nin tamamlanmış projelerini inceleyin. Ev ve iş yeri perde uygulamalarımızdan örnekler.",
-  }
+    url: "/portfolio",
+  },
+  alternates: { canonical: "/portfolio" },
 }

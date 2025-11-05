@@ -41,10 +41,14 @@ function XIcon({ className, ...props }: SVGProps<SVGSVGElement>) {
 }
 // Basit button kullanımı, ek bağımlılıkları azaltmak için
 import Logo from "@/components/logo" // Fixed logo import path
+import { usePathname, useRouter } from "next/navigation"
 
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const router = useRouter()
+  const pathname = usePathname()
+  const isTeklif = pathname?.startsWith('/fiyat-teklifi')
 
   useEffect(() => {
     const handleScroll = () => {
@@ -73,40 +77,52 @@ export default function Header() {
           <Logo className="text-primary-foreground animate-fade-in" />
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center gap-8">
+          <nav className="hidden md:flex items-center gap-3">
             <button
               onClick={() => scrollToSection("anasayfa")}
-              className="text-primary-foreground hover:text-primary-foreground/80 transition-colors font-medium"
+              className="text-primary-foreground/95 border-2 border-white px-4 py-2 rounded-full transition-all hover:bg-white/10 hover:shadow-[inset_0_0_0_2px_rgba(255,255,255,1)]"
             >
               Ana Sayfa
             </button>
+            <a
+              href="/kemalpasa-perdeci"
+              className="text-primary-foreground/95 border-2 border-white px-4 py-2 rounded-full transition-all hover:bg-white/10 hover:shadow-[inset_0_0_0_2px_rgba(255,255,255,1)]"
+            >
+              Kemalpaşa Perdeci
+            </a>
+            <a
+              href="/ulucak-perdeci"
+              className="text-primary-foreground/95 border-2 border-white px-4 py-2 rounded-full transition-all hover:bg-white/10 hover:shadow-[inset_0_0_0_2px_rgba(255,255,255,1)]"
+            >
+              Ulucak Perdeci
+            </a>
             <button
               onClick={() => scrollToSection("hizmetler")}
-              className="text-primary-foreground hover:text-primary-foreground/80 transition-colors font-medium"
+              className="text-primary-foreground/95 border-2 border-white px-4 py-2 rounded-full transition-all hover:bg-white/10 hover:shadow-[inset_0_0_0_2px_rgba(255,255,255,1)]"
             >
               Hizmetler
             </button>
             <button
               onClick={() => scrollToSection("portfolyo")}
-              className="text-primary-foreground hover:text-primary-foreground/80 transition-colors font-medium"
+              className="text-primary-foreground/95 border-2 border-white px-4 py-2 rounded-full transition-all hover:bg-white/10 hover:shadow-[inset_0_0_0_2px_rgba(255,255,255,1)]"
             >
               Portfolyo
             </button>
             <button
               onClick={() => scrollToSection("markalar")}
-              className="text-primary-foreground hover:text-primary-foreground/80 transition-colors font-medium"
+              className="text-primary-foreground/95 border-2 border-white px-4 py-2 rounded-full transition-all hover:bg-white/10 hover:shadow-[inset_0_0_0_2px_rgba(255,255,255,1)]"
             >
               Markalar
             </button>
-            <a
-              href="/fiyat-teklifi"
-              className="text-primary-foreground hover:text-primary-foreground/80 transition-colors font-medium bg-primary-foreground/10 px-4 py-2 rounded-lg hover:bg-primary-foreground/20"
+            <button
+              onClick={() => router.push('/fiyat-teklifi')}
+              className={`${isTeklif ? 'bg-white text-primary' : 'text-primary-foreground/95'} border-2 border-white px-4 py-2 rounded-full transition-all hover:bg-white/10 hover:shadow-[inset_0_0_0_2px_rgba(255,255,255,1)] focus:outline-none focus-visible:outline-none focus:ring-0`}
             >
               Fiyat Teklifi
-            </a>
+            </button>
             <button
               onClick={() => scrollToSection("iletisim")}
-              className="text-primary-foreground hover:text-primary-foreground/80 transition-colors font-medium"
+              className="text-primary-foreground/95 border-2 border-white px-4 py-2 rounded-full transition-all hover:bg-white/10 hover:shadow-[inset_0_0_0_2px_rgba(255,255,255,1)]"
             >
               İletişim
             </button>
@@ -128,37 +144,49 @@ export default function Header() {
             <div className="flex flex-col gap-4">
               <button
                 onClick={() => scrollToSection("anasayfa")}
-                className="text-primary-foreground hover:text-primary-foreground/80 transition-colors font-medium text-left"
+                className="text-primary-foreground/95 border-2 border-white px-4 py-2 rounded-full transition-all hover:bg-white/10 text-left"
               >
                 Ana Sayfa
               </button>
+              <a
+                href="/kemalpasa-perdeci"
+                className="text-primary-foreground/95 border-2 border-white px-4 py-2 rounded-full transition-all hover:bg-white/10"
+              >
+                Kemalpaşa Perdeci
+              </a>
+              <a
+                href="/ulucak-perdeci"
+                className="text-primary-foreground/95 border-2 border-white px-4 py-2 rounded-full transition-all hover:bg-white/10"
+              >
+                Ulucak Perdeci
+              </a>
               <button
                 onClick={() => scrollToSection("hizmetler")}
-                className="text-primary-foreground hover:text-primary-foreground/80 transition-colors font-medium text-left"
+                className="text-primary-foreground/95 border-2 border-white px-4 py-2 rounded-full transition-all hover:bg-white/10 text-left"
               >
                 Hizmetler
               </button>
               <button
                 onClick={() => scrollToSection("portfolyo")}
-                className="text-primary-foreground hover:text-primary-foreground/80 transition-colors font-medium text-left"
+                className="text-primary-foreground/95 border-2 border-white px-4 py-2 rounded-full transition-all hover:bg-white/10 text-left"
               >
                 Portfolyo
               </button>
               <button
                 onClick={() => scrollToSection("markalar")}
-                className="text-primary-foreground hover:text-primary-foreground/80 transition-colors font-medium text-left"
+                className="text-primary-foreground/95 border-2 border-white px-4 py-2 rounded-full transition-all hover:bg-white/10 text-left"
               >
                 Markalar
               </button>
-              <a
-                href="/fiyat-teklifi"
-                className="text-primary-foreground hover:text-primary-foreground/80 transition-colors font-medium text-left bg-primary-foreground/10 px-4 py-2 rounded-lg hover:bg-primary-foreground/20"
+              <button
+                onClick={() => router.push('/fiyat-teklifi')}
+                className={`${isTeklif ? 'bg-white text-primary' : 'text-primary-foreground/95'} border-2 border-white px-4 py-2 rounded-full transition-all hover:bg-white/10`}
               >
                 Fiyat Teklifi
-              </a>
+              </button>
               <button
                 onClick={() => scrollToSection("iletisim")}
-                className="text-primary-foreground hover:text-primary-foreground/80 transition-colors font-medium text-left"
+                className="text-primary-foreground/95 border-2 border-white px-4 py-2 rounded-full transition-all hover:bg-white/10 text-left"
               >
                 İletişim
               </button>

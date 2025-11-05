@@ -8,9 +8,10 @@ interface CartSummaryProps {
   items: CartItem[]
   onClose: () => void
   onRemove: (id: string) => void
+  onRequestQuote?: () => void
 }
 
-export default function CartSummary({ items, onClose, onRemove }: CartSummaryProps) {
+export default function CartSummary({ items, onClose, onRemove, onRequestQuote }: CartSummaryProps) {
   const totalPrice = items.reduce((sum, item) => sum + item.price, 0)
 
   return (
@@ -81,9 +82,10 @@ export default function CartSummary({ items, onClose, onRemove }: CartSummaryPro
             <motion.button
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
+              onClick={() => onRequestQuote && onRequestQuote()}
               className="w-full bg-slate-900 text-white py-3 rounded-lg font-medium hover:bg-slate-800 transition-colors"
             >
-              Siparişi Tamamla
+              Teklif Gönder
             </motion.button>
           </div>
         )}

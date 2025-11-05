@@ -1,13 +1,16 @@
 import type { NextConfig } from "next";
 const isProd = process.env.NODE_ENV === 'production'
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH || ''
 
 const nextConfig: NextConfig = {
   // Artık kök dizinde (/) çalışacak
   productionBrowserSourceMaps: false,
   env: {
-    NEXT_PUBLIC_BASE_PATH: '',
+    NEXT_PUBLIC_BASE_PATH: basePath,
     NEXT_PUBLIC_ENABLE_ANALYTICS: process.env.VERCEL ? '1' : '0',
   },
+  basePath,
+  assetPrefix: basePath || undefined,
 
   images: {
     // Prod'da image optimizer 400 veriyordu; doğrudan statik dosyaları kullan

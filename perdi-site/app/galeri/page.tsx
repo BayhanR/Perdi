@@ -39,6 +39,19 @@ export default function GaleriPage() {
 
   return (
     <div className="min-h-screen bg-background">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'BreadcrumbList',
+            itemListElement: [
+              { '@type': 'ListItem', position: 1, name: 'Anasayfa', item: '/' },
+              { '@type': 'ListItem', position: 2, name: 'Galeri', item: '/galeri' },
+            ],
+          }),
+        }}
+      />
       {/* Header */}
       <div className="bg-primary text-primary-foreground py-14">
         <div className="container mx-auto px-4">
@@ -80,7 +93,7 @@ export default function GaleriPage() {
             >
               <Image
                 src={`${process.env.NEXT_PUBLIC_BASE_PATH || ''}${item.src}`}
-                alt={"Galeri Görseli"}
+                alt={`Tezer Perde Galeri – Kemalpaşa perde örnekleri ${idx + 1}`}
                 fill
                 className="object-cover transition-transform duration-500 group-hover:scale-110"
                 priority={idx < 6}

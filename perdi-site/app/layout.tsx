@@ -11,7 +11,13 @@ const lato = Lato({
   display: "swap",
 })
 
-export const metadata = {
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://tezerperde.com"
+const BASE_PATH = process.env.NEXT_PUBLIC_BASE_PATH || ""
+const BUSINESS_PHONE = process.env.NEXT_PUBLIC_BUSINESS_PHONE || "+90 542 774 07 26"
+const BUSINESS_ADDRESS = process.env.NEXT_PUBLIC_BUSINESS_ADDRESS || "İzmir, Türkiye"
+
+export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
   icons: {
     icon: [
       { url: '/favicon.ico' },
@@ -20,8 +26,10 @@ export const metadata = {
     shortcut: '/favicon.ico',
     apple: '/apple-icon.png',
   },
-  title:
-    "Tezer Perde | Kemalpaşa & Ulucak Perde Modelleri | İzmir Stor, Zebra, Tül, Fon Perde",
+  title: {
+    default: "Tezer Perde | Kemalpaşa & Ulucak Perde Modelleri",
+    template: "%s | Tezer Perde",
+  },
   description:
     "Tezer Perde, Kemalpaşa ve Ulucak'ta perde dekorasyonunun güvenilir adresi. Stor perde, zebra perde, tül perde, fon perde, blackout, jaluzi ve dikey perde modellerinde ücretsiz keşif ve profesyonel montaj.",
   keywords: [
@@ -47,15 +55,14 @@ export const metadata = {
   authors: [{ name: "Tezer Perde" }],
   robots: "index, follow",
   openGraph: {
-    title:
-      "Tezer Perde | İzmir Kemalpaşa & Ulucak Perde Modelleri | Stor, Zebra, Tül, Fon Perde",
+    title: "Tezer Perde | İzmir Kemalpaşa & Ulucak Perde Modelleri",
     description:
       "İzmir, Kemalpaşa ve Ulucak bölgesinde stor, zebra, tül, fon, blackout, dikey ve jaluzi perde modellerinde ücretsiz keşif ve montaj.",
-    url: "https://tezerperde.com",
+    url: "/",
     siteName: "Tezer Perde",
     images: [
       {
-        url: "https://www.tezerperde.com/favicon.png",
+        url: "/icon.png",
         width: 1200,
         height: 630,
         alt: "Tezer Perde Kemalpaşa İzmir Mağazası",
@@ -69,10 +76,10 @@ export const metadata = {
     title: "Tezer Perde | İzmir Kemalpaşa & Ulucak Perde Modelleri",
     description:
       "Stor, zebra, tül, fon, blackout, jaluzi ve dikey perde modellerinde profesyonel hizmet.",
-    images: ["https://www.tezerperde.com/favicon.png"],
+    images: ["/icon.png"],
   },
   alternates: {
-    canonical: "https://tezerperde.com/",
+    canonical: "/",
   },
 };
 
@@ -85,9 +92,62 @@ export default function RootLayout({
   return (
     <html lang="tr">
       <head>
-        <link rel="icon" href="/favicon.ico" sizes="any" />
-        <link rel="icon" href="/icon.png" type="image/png" />
-        <link rel="apple-touch-icon" href="/apple-icon.png" />
+        <link rel="icon" href={`${BASE_PATH}/favicon.ico`} sizes="any" />
+        <link rel="icon" href={`${BASE_PATH}/favicon-32x32.png`} type="image/png" sizes="32x32" />
+        <link rel="icon" href={`${BASE_PATH}/icon.png`} type="image/png" />
+        <link rel="apple-touch-icon" href={`${BASE_PATH}/apple-icon.png`} />
+        <meta name="theme-color" content="#b90e2a" />
+        <meta name="robots" content="index, follow, max-image-preview:large" />
+        {/* Organization JSON-LD */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'Organization',
+              name: 'Tezer Perde',
+              url: SITE_URL,
+              logo: new URL('/icon.png', SITE_URL).toString(),
+              sameAs: [],
+            }),
+          }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'WebSite',
+              name: 'Tezer Perde',
+              url: SITE_URL,
+            }),
+          }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'LocalBusiness',
+              name: 'Tezer Perde',
+              url: SITE_URL,
+              telephone: BUSINESS_PHONE,
+              image: new URL('/icon.png', SITE_URL).toString(),
+              address: {
+                '@type': 'PostalAddress',
+                streetAddress: BUSINESS_ADDRESS,
+                addressLocality: 'İzmir',
+                addressCountry: 'TR',
+              },
+              areaServed: [
+                { '@type': 'City', name: 'Kemalpaşa' },
+                { '@type': 'City', name: 'Ulucak' },
+                { '@type': 'City', name: 'İzmir' }
+              ],
+              priceRange: '₺₺',
+            }),
+          }}
+        />
       </head>
       <body className={`${lato.variable} font-sans antialiased`}>
         {children}

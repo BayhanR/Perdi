@@ -16,14 +16,26 @@ interface ProductSelectorProps {
   onSelectProduct: (product: CurtainType) => void
 }
 
-const productImages: Record<CurtainType, string> = {
-  Tül: "/sheer-curtain-elegant-white.jpg",
-  Güneşlik: "/sunscreen-modern-textured.jpg",
-  Fon: "/blackout-curtain-dark-fabric.jpg",
-  Blackout: "/blackout-solids-dark.jpg",
-  Stor: "/roller-blind-sleek-design.jpg",
-  Jaluzi: "/venetian-blind-aluminum-slats.jpg",
-  Plise: "/plise-modern-fold.jpg",
+function getThumb(type: CurtainType): string {
+  const base = process.env.NEXT_PUBLIC_BASE_PATH || ""
+  switch (type) {
+    case "Tül":
+      return `${base}/tül.jpg`
+    case "Güneşlik":
+      return `${base}/guneslik1.jpg`
+    case "Fon":
+      return `${base}/fon1.jpg`
+    case "Blackout":
+      return `${base}/blackout-curtain-dark-fabric.jpg`
+    case "Stor":
+      return `${base}/roller-blind-sleek-design.jpg`
+    case "Jaluzi":
+      return `${base}/venetian-blind-aluminum-slats.jpg`
+    case "Plise":
+      return `${base}/plise.jpg`
+    default:
+      return `${base}/placeholder.svg`
+  }
 }
 
 export default function ProductSelector({ products, selectedProduct, onSelectProduct }: ProductSelectorProps) {
@@ -54,7 +66,7 @@ export default function ProductSelector({ products, selectedProduct, onSelectPro
               
               <div className="relative w-16 h-16 lg:w-20 lg:h-20 shrink-0 rounded-lg overflow-hidden bg-slate-100 shadow-md">
                 <Image
-                  src={productImages[product.type] || "/placeholder.svg"}
+                  src={getThumb(product.type)}
                   alt={product.name}
                   fill
                   className="object-cover group-hover:scale-110 transition-transform duration-300"
