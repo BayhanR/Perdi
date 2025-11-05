@@ -17,6 +17,9 @@ const nextConfig: NextConfig = {
     unoptimized: true,
   },
 
+  // Next.js 16'da Turbopack varsayılan, webpack kullanmak için boş turbopack config
+  turbopack: {},
+
   async redirects() {
     // Hem dev hem prod: eski /portfolio adresini /galeri'ye yönlendir
     return [

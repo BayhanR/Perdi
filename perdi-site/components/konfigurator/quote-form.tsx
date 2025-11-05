@@ -76,12 +76,32 @@ export default function QuoteForm({ cartItems, onClose }: QuoteFormProps) {
     requestDate: new Date().toISOString(),
   })
 
-  const submitToApi = async (payload: any) => {
-    await fetch("/api/quote", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload),
-    })
+  const submitToApi = async (payload: {
+    measurementRequest: boolean
+    customerInfo: {
+      name: string
+      phone: string
+      address: string
+      message: string | null
+    }
+    products: Array<{
+      productType: string
+      width: number
+      height: number
+      estimatedPrice: number
+    }>
+    totalEstimatedPrice: number
+    requestDate: string
+  }) => {
+    try {
+      await fetch("/api/quote", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      })
+    } catch (error) {
+      console.error("Quote submission error:", error)
+    }
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -137,21 +157,34 @@ export default function QuoteForm({ cartItems, onClose }: QuoteFormProps) {
               {/* Header */}
               <div className="flex justify-between items-center mb-6">
                 <h2 className="text-2xl font-light text-slate-900">Teklif İsteyin</h2>
-                <button onClick={onClose} className="p-2 hover:bg-slate-100 rounded-lg transition-colors" aria-label="Formu kapat">
+                <button
+                  onClick={onClose}
+                  className="p-2 hover:bg-slate-100 rounded-lg transition-colors"
+                  aria-label="Formu kapat"
+                >
                   <X className="w-5 h-5" />
                 </button>
               </div>
 
               {/* Seçili Ürünler */}
               {cartItems.length > 0 && (
-                <motion.div initial="hidden" animate="show" variants={containerVariants} className="mb-4 p-3 bg-slate-50 rounded-lg border border-slate-200">
-                  <h3 className="text-sm font-semibold text-slate-700 mb-2">
-                    Seçili Ürünler ({cartItems.length})
-                  </h3>
+                <motion.div
+                  initial="hidden"
+                  animate="show"
+                  variants={containerVariants}
+                  className="mb-4 p-3 bg-slate-50 rounded-lg border border-slate-200"
+                >
+                  <h3 className="text-sm font-semibold text-slate-700 mb-2">Seçili Ürünler ({cartItems.length})</h3>
                   <div className="space-y-2 max-h-32 overflow-y-auto pr-1">
                     {cartItems.map((item) => (
-                      <motion.div key={item.id} variants={itemVariants} className="text-xs text-slate-600 flex justify-between">
-                        <span>• {item.type} ({item.width}×{item.height} cm)</span>
+                      <motion.div
+                        key={item.id}
+                        variants={itemVariants}
+                        className="text-xs text-slate-600 flex justify-between"
+                      >
+                        <span>
+                          • {item.type} ({item.width}×{item.height} cm)
+                        </span>
                         <span className="font-medium">{item.price.toLocaleString("tr-TR")} ₺</span>
                       </motion.div>
                     ))}
@@ -164,7 +197,13 @@ export default function QuoteForm({ cartItems, onClose }: QuoteFormProps) {
               )}
 
               {/* Form */}
-              <motion.form onSubmit={handleSubmit} className="space-y-4 mb-6" initial="hidden" animate="show" variants={containerVariants}>
+              <motion.form
+                onSubmit={handleSubmit}
+                className="space-y-4 mb-6"
+                initial="hidden"
+                animate="show"
+                variants={containerVariants}
+              >
                 <div>
                   <motion.label variants={itemVariants} className="block text-sm font-medium text-slate-700 mb-1">
                     İsim <span className="text-red-500">*</span>
@@ -262,8 +301,10 @@ export default function QuoteForm({ cartItems, onClose }: QuoteFormProps) {
                     <span className="inline-flex items-center gap-2">
                       <Loader2 className="w-4 h-4 animate-spin" /> Gönderiliyor...
                     </span>
+                  ) : measurementRequest ? (
+                    "Teklif + Ölçü Talebi Gönder"
                   ) : (
-                    measurementRequest ? "Teklif + Ölçü Talebi Gönder" : "Teklif İsteği Gönder"
+                    "Teklif İsteği Gönder"
                   )}
                 </motion.button>
                 {/* Measurement status indicator */}
@@ -276,11 +317,7 @@ export default function QuoteForm({ cartItems, onClose }: QuoteFormProps) {
                       : "bg-red-50 border-red-200 text-red-800"
                   }`}
                 >
-                  {measurementRequest ? (
-                    <Check className="w-4 h-4" />
-                  ) : (
-                    <XCircle className="w-4 h-4" />
-                  )}
+                  {measurementRequest ? <Check className="w-4 h-4" /> : <XCircle className="w-4 h-4" />}
                   <span>{measurementRequest ? "Ölçüye gidilecek" : "Ölçüye gidilmeyecek"}</span>
                 </motion.div>
 
@@ -303,4 +340,3 @@ export default function QuoteForm({ cartItems, onClose }: QuoteFormProps) {
     </>
   )
 }
-

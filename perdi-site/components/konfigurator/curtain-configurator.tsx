@@ -73,7 +73,7 @@ export default function CurtainConfigurator() {
         return { min: 0, max: 0 }
     }
   }
-  
+
   // Birim fiyat bilgisi
   const getUnitPriceInfo = () => {
     switch (selectedProduct) {
@@ -95,10 +95,10 @@ export default function CurtainConfigurator() {
         return ""
     }
   }
-  
+
   // Tek bir fiyat mı yoksa aralık mı?
   const hasRange = selectedProduct === "Tül" || selectedProduct === "Fon"
-  
+
   // Ürün tipi kontrolü
   const isFonProduct = selectedProduct === "Fon"
   const isWidthBasedProduct = ["Tül", "Güneşlik", "Blackout"].includes(selectedProduct)
@@ -125,7 +125,7 @@ export default function CurtainConfigurator() {
   }
 
   return (
-    <div className="min-h-screen bg-linear-to-br from-white via-slate-50 to-slate-100">
+    <div className="min-h-screen bg-gradient-to-br from-white via-slate-50 to-slate-100">
       <header className="fixed top-0 left-0 right-0 border-b border-slate-200 bg-white text-slate-900 z-40">
         <div className="w-full px-2 lg:px-3 py-2 flex justify-between items-center relative h-14">
           <Link
@@ -214,4 +214,3 @@ export default function CurtainConfigurator() {
     </div>
   )
 }
-

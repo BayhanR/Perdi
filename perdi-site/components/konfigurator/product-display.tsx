@@ -33,11 +33,7 @@ function getImagesForType(type: CurtainType): string[] {
         `${base}/sunscreen-light-control.jpg`,
       ]
     case "Fon":
-      return [
-        `${base}/fon1.jpg`,
-        `${base}/fon2.jpg`,
-        `${base}/fon3.jpg`,
-      ]
+      return [`${base}/fon1.jpg`, `${base}/fon2.jpg`, `${base}/fon3.jpg`]
     case "Blackout":
       return [
         `${base}/blackout-curtain-dark-fabric.jpg`,
@@ -72,15 +68,9 @@ function getImagesForType(type: CurtainType): string[] {
         `${base}/jaluzi2.jpg`,
       ]
     case "Plise":
-      return [
-        `${base}/plise.jpg`,
-        `${base}/plise2.jpg`,
-        `${base}/plise3.jpg`,
-      ]
+      return [`${base}/plise.jpg`, `${base}/plise2.jpg`, `${base}/plise3.jpg`]
     default:
-      return [
-        `${base}/placeholder.svg?height=600&width=800&query=perde`,
-      ]
+      return [`${base}/placeholder.svg?height=600&width=800&query=perde`]
   }
 }
 
@@ -140,18 +130,18 @@ export default function ProductDisplay({ selectedProduct }: ProductDisplayProps)
       `}</style>
 
       <div className="relative w-full flex-1 overflow-hidden bg-slate-100">
-        <div className={`image-container absolute inset-0 ${isTransitioning ? 'transitioning' : ''}`}>
+        <div className={`image-container absolute inset-0 ${isTransitioning ? "transitioning" : ""}`}>
           <Image
-            src={images[currentImageIndex]}
+            src={images[currentImageIndex] || "/placeholder.svg"}
             alt={`${selectedProduct} - ${currentImageIndex + 1}`}
             fill
             className="object-cover"
             priority
           />
         </div>
-        
+
         {/* Ürün İsmi Overlay */}
-        <div className="absolute bottom-0 left-0 right-0 bg-linear-to-t from-black/70 to-transparent p-4 lg:p-6">
+        <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4 lg:p-6">
           <h3 className="text-white text-xl lg:text-2xl font-light tracking-wide">{selectedProduct}</h3>
         </div>
       </div>
@@ -164,13 +154,14 @@ export default function ProductDisplay({ selectedProduct }: ProductDisplayProps)
               setCurrentImageIndex(idx)
               setIsTransitioning(false)
             }}
-            className={`transition-all duration-300 ${idx === currentImageIndex ? 'bg-slate-900 w-6 lg:w-8' : 'bg-slate-300 hover:bg-slate-400 w-2'} h-1.5 rounded-full hover:scale-110 active:scale-95`}
+            className={`transition-all duration-300 ${idx === currentImageIndex ? "bg-slate-900 w-6 lg:w-8" : "bg-slate-300 hover:bg-slate-400 w-2"} h-1.5 rounded-full hover:scale-110 active:scale-95`}
             aria-label={`Resim ${idx + 1}`}
           />
         ))}
-        <span className="text-xs text-slate-500 ml-2">{currentImageIndex + 1} / {images.length}</span>
+        <span className="text-xs text-slate-500 ml-2">
+          {currentImageIndex + 1} / {images.length}
+        </span>
       </div>
     </div>
   )
 }
-

@@ -45,15 +45,15 @@ export default function ProductSelector({ products, selectedProduct, onSelectPro
         <h2 className="text-lg lg:text-xl font-light text-slate-900 tracking-tight">Ürün Seçin</h2>
         <p className="text-xs text-slate-500 mt-1">{products.length} farklı seçenek</p>
       </div>
-      
+
       <div className="space-y-2 flex-1 overflow-y-auto overflow-x-hidden p-3">
         {products.map((product) => (
           <button
             key={product.type}
             onClick={() => onSelectProduct(product.type)}
             className={`w-full group relative overflow-hidden rounded-xl transition-all duration-300 ${
-              selectedProduct === product.type 
-                ? "ring-2 ring-slate-900 shadow-xl bg-slate-50" 
+              selectedProduct === product.type
+                ? "ring-2 ring-slate-900 shadow-xl bg-slate-50"
                 : "ring-1 ring-slate-200 hover:ring-slate-400 hover:shadow-md"
             } active:scale-98`}
           >
@@ -63,16 +63,16 @@ export default function ProductSelector({ products, selectedProduct, onSelectPro
                   <span className="text-white text-xs">✓</span>
                 </div>
               )}
-              
+
               <div className="relative w-16 h-16 lg:w-20 lg:h-20 shrink-0 rounded-lg overflow-hidden bg-slate-100 shadow-md">
                 <Image
-                  src={getThumb(product.type)}
+                  src={getThumb(product.type) || "/placeholder.svg"}
                   alt={product.name}
                   fill
                   className="object-cover group-hover:scale-110 transition-transform duration-300"
                 />
               </div>
-              
+
               <div className="flex-1 text-left pt-1">
                 <h3 className="font-semibold text-sm lg:text-base text-slate-900">{product.name}</h3>
                 <p className="text-xs text-slate-600 mt-0.5 leading-tight">{product.description}</p>
@@ -84,4 +84,3 @@ export default function ProductSelector({ products, selectedProduct, onSelectPro
     </div>
   )
 }
-

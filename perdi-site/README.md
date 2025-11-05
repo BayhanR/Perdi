@@ -35,6 +35,34 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
 
+## Teknoloji Sürümleri ve Önemli Notlar
+
+### Sürüm Bilgileri
+- **Next.js**: 16.0.1
+- **React**: 18.3.1
+- **React-DOM**: 18.3.1
+- **Tailwind CSS**: 4.1.9
+- **TypeScript**: 5.x
+
+### Önemli Notlar
+
+#### Next.js 16 ve Turbopack
+Next.js 16'da Turbopack varsayılan olarak etkin. Bu proje webpack yapılandırması kullanıyor, bu nedenle `next.config.ts` dosyasında `turbopack: {}` boş konfigürasyonu eklenmiştir. Bu sayede webpack yapılandırması korunur ve build başarıyla çalışır.
+
+#### React 18.3.1 Uyumluluğu
+Next.js 16 ile uyumlu olması için React ve React-DOM 18.3.1 sürümüne güncellenmiştir. Eski 18.2.0 sürümü build hatalarına neden olabilir.
+
+#### Tailwind CSS 4
+Proje Tailwind CSS 4 kullanmaktadır. Yeni sözdizimi için:
+- `@import "tailwindcss"` kullanılır (eski `@tailwind` direktifleri yerine)
+- PostCSS yapılandırması `@tailwindcss/postcss` plugin'ini kullanır
+
+#### Build Sorunları Çözümü
+Eğer build alırken "Unexpected end of JSON input" hatası alırsanız:
+1. `node_modules` ve `package-lock.json` dosyalarını silin
+2. `npm install` komutunu çalıştırın
+3. `npm run build` ile tekrar deneyin
+
 ## Ortam Değişkenleri (.env)
 
 Aşağıdaki değişkenleri `.env.local` dosyanıza ekleyin (veya barındırma ortamında Environment Variables olarak tanımlayın):

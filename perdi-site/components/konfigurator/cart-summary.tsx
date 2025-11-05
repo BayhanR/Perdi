@@ -36,7 +36,11 @@ export default function CartSummary({ items, onClose, onRemove, onRequestQuote }
         {/* Header */}
         <div className="flex justify-between items-center p-6 border-b border-slate-200">
           <h2 className="text-xl font-light text-slate-900">Sepet Özeti</h2>
-          <button onClick={onClose} className="p-2 hover:bg-slate-100 rounded-lg transition-colors" aria-label="Sepeti kapat">
+          <button
+            onClick={onClose}
+            className="p-2 hover:bg-slate-100 rounded-lg transition-colors"
+            aria-label="Sepeti kapat"
+          >
             <X className="w-5 h-5" />
           </button>
         </div>
@@ -93,4 +97,3 @@ export default function CartSummary({ items, onClose, onRemove, onRequestQuote }
     </>
   )
 }
-
