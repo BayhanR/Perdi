@@ -84,18 +84,7 @@ export default function Header() {
             >
               Ana Sayfa
             </button>
-            <a
-              href="/kemalpasa-perdeci"
-              className="text-primary-foreground/95 border-2 border-white px-4 py-2 rounded-full transition-all hover:bg-white/10 hover:shadow-[inset_0_0_0_2px_rgba(255,255,255,1)]"
-            >
-              Kemalpaşa Perdeci
-            </a>
-            <a
-              href="/ulucak-perdeci"
-              className="text-primary-foreground/95 border-2 border-white px-4 py-2 rounded-full transition-all hover:bg-white/10 hover:shadow-[inset_0_0_0_2px_rgba(255,255,255,1)]"
-            >
-              Ulucak Perdeci
-            </a>
+            {/* SEO sayfaları navda görünmesin */}
             <button
               onClick={() => scrollToSection("hizmetler")}
               className="text-primary-foreground/95 border-2 border-white px-4 py-2 rounded-full transition-all hover:bg-white/10 hover:shadow-[inset_0_0_0_2px_rgba(255,255,255,1)]"
@@ -148,18 +137,7 @@ export default function Header() {
               >
                 Ana Sayfa
               </button>
-              <a
-                href="/kemalpasa-perdeci"
-                className="text-primary-foreground/95 border-2 border-white px-4 py-2 rounded-full transition-all hover:bg-white/10"
-              >
-                Kemalpaşa Perdeci
-              </a>
-              <a
-                href="/ulucak-perdeci"
-                className="text-primary-foreground/95 border-2 border-white px-4 py-2 rounded-full transition-all hover:bg-white/10"
-              >
-                Ulucak Perdeci
-              </a>
+              {/* SEO sayfaları navda görünmesin */}
               <button
                 onClick={() => scrollToSection("hizmetler")}
                 className="text-primary-foreground/95 border-2 border-white px-4 py-2 rounded-full transition-all hover:bg-white/10 text-left"

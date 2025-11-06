@@ -29,14 +29,14 @@ export default function Hero() {
               isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
             }`}
           >
-            Zarafet ve Kalite ile Mekanlarınızı Dönüştürün
+            Kemalpaşa & Ulucak’ta Profesyonel Perde Çözümleri
           </h1>
           <p
             className={`text-xl md:text-2xl text-muted-foreground mb-8 text-pretty transition-all duration-1000 delay-200 ${
               isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
             }`}
           >
-            Profesyonel perde ve dekorasyon çözümleri ile hayalinizdeki mekanları yaratıyoruz
+            Ücretsiz keşif, yerinde ölçü ve özenli montaj ile aynı gün teklif alın
           </p>
           <div
             className={`flex flex-col sm:flex-row gap-4 justify-center transition-all duration-1000 delay-400 ${
@@ -67,6 +67,21 @@ export default function Hero() {
             >
               İletişime Geçin
             </button>
+          </div>
+
+          {/* Taç Kalitesi Rozeti */}
+          <div className={`mt-6 flex items-center justify-center gap-3 transition-all duration-1000 delay-500 ${
+            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+          }`}>
+            <div className="relative w-12 h-8">
+              <img
+                src={`${process.env.NEXT_PUBLIC_BASE_PATH || ''}/brands/tac-logo.png`}
+                alt="Taç Logo"
+                className="object-contain w-full h-full"
+                loading="lazy"
+              />
+            </div>
+            <span className="text-sm text-muted-foreground">Ürünlerimiz <span className="font-semibold">Taç</span> kalitesindedir</span>
           </div>
         </div>
       </div>
