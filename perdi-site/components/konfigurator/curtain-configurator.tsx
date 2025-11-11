@@ -38,8 +38,8 @@ export default function CurtainConfigurator() {
   const [showCart, setShowCart] = useState(false)
   const [showQuoteForm, setShowQuoteForm] = useState(false)
 
-  // Fiyat aralığı hesaplama (min-max)
-  const calculatePriceRange = () => {
+  // Orijinal fiyat hesaplama (indirimli fiyat - sepete eklenen)
+  const calculateOriginalPriceRange = () => {
     const widthInMeters = width / 100
     const heightInMeters = height / 100
     const squareMeters = widthInMeters * heightInMeters
@@ -74,6 +74,16 @@ export default function CurtainConfigurator() {
     }
   }
 
+  // Liste fiyatı hesaplama (gösterim için - %35 indirim için %54 arttırılmış)
+  const calculatePriceRange = () => {
+    const original = calculateOriginalPriceRange()
+    // %35 indirim için: liste fiyatı = orijinal / 0.65 = orijinal × 1.5385
+    return {
+      min: Math.round(original.min * 1.5385),
+      max: Math.round(original.max * 1.5385),
+    }
+  }
+
   // Birim fiyat bilgisi
   const getUnitPriceInfo = () => {
     switch (selectedProduct) {
@@ -104,8 +114,9 @@ export default function CurtainConfigurator() {
   const isWidthBasedProduct = ["Tül", "Güneşlik", "Blackout"].includes(selectedProduct)
 
   const handleAddToCart = () => {
-    const priceRange = calculatePriceRange()
-    const averagePrice = (priceRange.min + priceRange.max) / 2
+    // Sepete eklerken indirimli fiyatı kullan (orijinal fiyat)
+    const originalPriceRange = calculateOriginalPriceRange()
+    const averagePrice = (originalPriceRange.min + originalPriceRange.max) / 2
     const newItem: CartItem = {
       id: `${Date.now()}`,
       type: selectedProduct,
@@ -179,6 +190,7 @@ export default function CurtainConfigurator() {
               onHeightChange={setHeight}
               selectedProduct={selectedProduct}
               priceRange={calculatePriceRange()}
+              originalPriceRange={calculateOriginalPriceRange()}
               unitPrice={getUnitPriceInfo()}
               hasRange={hasRange}
               onAddToCart={handleAddToCart}

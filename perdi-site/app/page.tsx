@@ -1,5 +1,6 @@
 import Header from "@/components/header"
 import Hero from "@/components/hero"
+import Services from "@/components/services"
 import Portfolio from "@/components/portfolio"
 import Brands from "@/components/brands"
 import FAQ from "@/components/faq"
@@ -18,6 +19,7 @@ export default function Home() {
     <main className="min-h-screen bg-background">
       <Header />
       <Hero />
+      <Services />
       <Portfolio />
       <Brands />
       <FAQ />

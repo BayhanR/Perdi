@@ -149,14 +149,26 @@ export default function QuoteForm({ cartItems, onClose }: QuoteFormProps) {
                 <span className="text-3xl">✓</span>
               </motion.div>
               <h3 className="text-xl font-medium text-slate-900 mb-2">Başarılı!</h3>
-              <p className="text-slate-600">Teklifiniz başarıyla gönderildi!</p>
+              <p className="text-slate-600">
+                Muhteşem Kasım İndirimi kapsamında teklifiniz bize ulaştı!
+              </p>
               <p className="text-slate-500 mt-1">Mağazamıza kahvemizi içmeye bekleriz ☕</p>
             </motion.div>
           ) : (
             <>
               {/* Header */}
-              <div className="flex justify-between items-center mb-6">
-                <h2 className="text-2xl font-light text-slate-900">Teklif İsteyin</h2>
+              <div className="flex justify-between items-start mb-6 bg-gradient-to-r from-rose-50 via-orange-50 to-amber-50 rounded-xl p-4 border border-rose-100">
+                <div>
+                  <h2 className="text-2xl font-light text-slate-900">Teklif İsteyin</h2>
+                  <p className="mt-2 inline-flex items-center gap-2 rounded-full bg-rose-500/10 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-rose-600">
+                    <span className="inline-block h-2 w-2 rounded-full bg-rose-500" />
+                    Muhteşem Kasım İndirimi
+                  </p>
+                  <p className="mt-3 max-w-xs text-sm text-slate-600">
+                    Kasım ayına özel avantajlarla fiyatları sabitledik! Teknik ekibimiz fırsat fiyatlarınızı onaylamak için
+                    en kısa sürede dönecek.
+                  </p>
+                </div>
                 <button
                   onClick={onClose}
                   className="p-2 hover:bg-slate-100 rounded-lg transition-colors"
@@ -172,26 +184,47 @@ export default function QuoteForm({ cartItems, onClose }: QuoteFormProps) {
                   initial="hidden"
                   animate="show"
                   variants={containerVariants}
-                  className="mb-4 p-3 bg-slate-50 rounded-lg border border-slate-200"
+                  className="mb-4 p-3 rounded-lg border border-rose-200 bg-rose-50/60"
                 >
-                  <h3 className="text-sm font-semibold text-slate-700 mb-2">Seçili Ürünler ({cartItems.length})</h3>
+                  <div className="flex items-center justify-between mb-2">
+                    <h3 className="text-sm font-semibold text-slate-700">
+                      Seçili Ürünler ({cartItems.length})
+                    </h3>
+                    <span className="rounded-full bg-white px-2 py-0.5 text-[11px] font-semibold uppercase tracking-wide text-rose-600">
+                      Kasım Fırsatı
+                    </span>
+                  </div>
                   <div className="space-y-2 max-h-32 overflow-y-auto pr-1">
                     {cartItems.map((item) => (
-                      <motion.div
-                        key={item.id}
-                        variants={itemVariants}
-                        className="text-xs text-slate-600 flex justify-between"
-                      >
-                        <span>
-                          • {item.type} ({item.width}×{item.height} cm)
-                        </span>
-                        <span className="font-medium">{item.price.toLocaleString("tr-TR")} ₺</span>
+                      <motion.div key={item.id} variants={itemVariants} className="text-xs text-slate-600 flex flex-col gap-1">
+                        <div className="flex justify-between items-center">
+                          <span>
+                            • {item.type} ({item.width}×{item.height} cm)
+                          </span>
+                        </div>
+                        <div className="flex justify-end items-baseline gap-2">
+                          <span className="text-[10px] text-slate-400 line-through">
+                            Liste: {Math.round(item.price * 1.5385).toLocaleString("tr-TR")} ₺
+                          </span>
+                          <span className="font-semibold text-rose-600">
+                            Kasım: {item.price.toLocaleString("tr-TR")} ₺
+                          </span>
+                        </div>
                       </motion.div>
                     ))}
                   </div>
-                  <div className="mt-2 pt-2 border-t border-slate-300 text-sm font-semibold text-slate-900 flex justify-between">
-                    <span>Toplam Tahmini:</span>
-                    <span>{cartItems.reduce((sum, item) => sum + item.price, 0).toLocaleString("tr-TR")} ₺</span>
+                  <div className="mt-2 pt-2 border-t border-rose-200 text-sm font-semibold text-slate-900">
+                    <div className="flex justify-between items-center mb-1">
+                      <span>Toplam Tahmini:</span>
+                      <div className="text-right">
+                        <span className="block text-xs text-slate-400 line-through font-normal">
+                          Liste: {Math.round(cartItems.reduce((sum, item) => sum + item.price, 0) * 1.5385).toLocaleString("tr-TR")} ₺
+                        </span>
+                        <span className="text-rose-600">
+                          Kasım Fiyatı: {cartItems.reduce((sum, item) => sum + item.price, 0).toLocaleString("tr-TR")} ₺
+                        </span>
+                      </div>
+                    </div>
                   </div>
                 </motion.div>
               )}
@@ -323,14 +356,16 @@ export default function QuoteForm({ cartItems, onClose }: QuoteFormProps) {
 
                 {/* Ortalama fiyat notu */}
                 <p className="mt-2 text-xs text-slate-600 text-center">
-                  Not: Bu tutar ortalama bir tahmindir; mağazada yapılacak keşif ve ürün tercihlerine göre netleşir.
+                  Not: Muhteşem Kasım İndirimi ile sabitlenen bu tutar ortalama bir tahmindir; mağazada yapılacak keşif ve
+                  ürün tercihlerine göre netleşir.
                 </p>
               </motion.form>
 
               {/* Info */}
-              <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg text-center">
-                <p className="text-sm text-blue-900">
-                  Ölçü konusunda emin değilseniz, <span className="font-medium">ücretsiz keşif</span> için gelebiliriz.
+              <div className="p-4 bg-rose-50 border border-rose-200 rounded-lg text-center">
+                <p className="text-sm text-rose-900">
+                  Ölçü konusunda emin değilseniz, Muhteşem Kasım İndirimi kapsamında{" "}
+                  <span className="font-medium">ücretsiz keşif</span> için gelebiliriz.
                 </p>
               </div>
             </>

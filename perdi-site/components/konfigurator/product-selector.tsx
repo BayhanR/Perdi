@@ -41,9 +41,17 @@ function getThumb(type: CurtainType): string {
 export default function ProductSelector({ products, selectedProduct, onSelectProduct }: ProductSelectorProps) {
   return (
     <div className="h-full flex flex-col bg-white rounded-2xl shadow-2xl border border-slate-200">
-      <div className="text-center border-b pb-2 p-3 shrink-0 bg-white rounded-t-2xl">
-        <h2 className="text-lg lg:text-xl font-light text-slate-900 tracking-tight">Ürün Seçin</h2>
-        <p className="text-xs text-slate-500 mt-1">{products.length} farklı seçenek</p>
+      <div className="text-center border-b pb-2 p-3 shrink-0 bg-gradient-to-r from-rose-50 via-orange-50 to-amber-50 rounded-t-2xl border-rose-200">
+        <div className="flex items-center justify-center gap-2 mb-2">
+          <h2 className="text-lg lg:text-xl font-light text-slate-900 tracking-tight">Ürün Seçin</h2>
+          <span className="inline-flex items-center gap-1 rounded-full bg-gradient-to-r from-rose-500 via-orange-500 to-amber-500 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-white">
+            <span className="inline-block h-1.5 w-1.5 rounded-full bg-white animate-pulse" />
+            %35 İndirim
+          </span>
+        </div>
+        <p className="text-xs text-slate-600 mt-1 font-medium">
+          {products.length} farklı seçenek • <span className="text-rose-600 font-semibold">Muhteşem Kasım İndirimi Aktif</span>
+        </p>
       </div>
 
       <div className="space-y-2 flex-1 overflow-y-auto overflow-x-hidden p-3">
@@ -74,8 +82,15 @@ export default function ProductSelector({ products, selectedProduct, onSelectPro
               </div>
 
               <div className="flex-1 text-left pt-1">
-                <h3 className="font-semibold text-sm lg:text-base text-slate-900">{product.name}</h3>
+                <div className="flex items-center gap-2 mb-0.5">
+                  <h3 className="font-semibold text-sm lg:text-base text-slate-900">{product.name}</h3>
+                  <span className="inline-flex items-center gap-0.5 rounded-full bg-gradient-to-r from-rose-500 via-orange-500 to-amber-500 px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-wide text-white">
+                    <span className="inline-block h-1 w-1 rounded-full bg-white" />
+                    %35
+                  </span>
+                </div>
                 <p className="text-xs text-slate-600 mt-0.5 leading-tight">{product.description}</p>
+                <p className="text-[10px] text-rose-600 font-semibold mt-1">Kasım İndirimi Aktif</p>
               </div>
             </div>
           </button>

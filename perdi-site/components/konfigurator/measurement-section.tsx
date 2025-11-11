@@ -12,6 +12,7 @@ interface MeasurementSectionProps {
   onHeightChange: (height: number) => void
   selectedProduct: CurtainType
   priceRange: { min: number; max: number }
+  originalPriceRange: { min: number; max: number }
   unitPrice: string
   hasRange: boolean
   onAddToCart: () => void
@@ -27,6 +28,7 @@ export default function MeasurementSection({
   onHeightChange,
   selectedProduct,
   priceRange,
+  originalPriceRange,
   unitPrice,
   hasRange,
   onAddToCart,
@@ -36,6 +38,8 @@ export default function MeasurementSection({
 }: MeasurementSectionProps) {
   const [displayMinPrice, setDisplayMinPrice] = useState(priceRange.min)
   const [displayMaxPrice, setDisplayMaxPrice] = useState(priceRange.max)
+  const [displayOriginalMinPrice, setDisplayOriginalMinPrice] = useState(originalPriceRange.min)
+  const [displayOriginalMaxPrice, setDisplayOriginalMaxPrice] = useState(originalPriceRange.max)
   const [unit, setUnit] = useState<"cm" | "m">("cm")
 
   // Helpers for unit conversion (state upstream is always cm)
@@ -52,7 +56,7 @@ export default function MeasurementSection({
   const maxVal = unit === "cm" ? 3000 : 30
 
   useEffect(() => {
-    // Animate price change for min
+    // Animate price change for min (liste fiyatı)
     const intervalMin = setInterval(() => {
       setDisplayMinPrice((prev) => {
         if (prev < priceRange.min) return Math.min(prev + Math.ceil((priceRange.min - prev) / 10), priceRange.min)
@@ -61,7 +65,7 @@ export default function MeasurementSection({
       })
     }, 30)
 
-    // Animate price change for max
+    // Animate price change for max (liste fiyatı)
     const intervalMax = setInterval(() => {
       setDisplayMaxPrice((prev) => {
         if (prev < priceRange.max) return Math.min(prev + Math.ceil((priceRange.max - prev) / 10), priceRange.max)
@@ -70,11 +74,35 @@ export default function MeasurementSection({
       })
     }, 30)
 
+    // Animate original price change for min (indirimli fiyat)
+    const intervalOriginalMin = setInterval(() => {
+      setDisplayOriginalMinPrice((prev) => {
+        if (prev < originalPriceRange.min)
+          return Math.min(prev + Math.ceil((originalPriceRange.min - prev) / 10), originalPriceRange.min)
+        if (prev > originalPriceRange.min)
+          return Math.max(prev - Math.ceil((prev - originalPriceRange.min) / 10), originalPriceRange.min)
+        return prev
+      })
+    }, 30)
+
+    // Animate original price change for max (indirimli fiyat)
+    const intervalOriginalMax = setInterval(() => {
+      setDisplayOriginalMaxPrice((prev) => {
+        if (prev < originalPriceRange.max)
+          return Math.min(prev + Math.ceil((originalPriceRange.max - prev) / 10), originalPriceRange.max)
+        if (prev > originalPriceRange.max)
+          return Math.max(prev - Math.ceil((prev - originalPriceRange.max) / 10), originalPriceRange.max)
+        return prev
+      })
+    }, 30)
+
     return () => {
       clearInterval(intervalMin)
       clearInterval(intervalMax)
+      clearInterval(intervalOriginalMin)
+      clearInterval(intervalOriginalMax)
     }
-  }, [priceRange])
+  }, [priceRange, originalPriceRange])
 
   return (
     <motion.div
@@ -193,10 +221,18 @@ export default function MeasurementSection({
           animate={{ scale: [1, 1.05, 1] }}
           transition={{ duration: 0.3 }}
           key={`${displayMinPrice}-${displayMaxPrice}`}
-          className="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 rounded-2xl p-5 lg:p-6 text-white text-center shadow-xl"
+          className="bg-gradient-to-br from-rose-600 via-rose-500 to-rose-600 rounded-2xl p-5 lg:p-6 text-white text-center shadow-xl relative overflow-hidden"
         >
+          {/* Kasım İndirimi Badge */}
+          <div className="absolute top-2 right-2">
+            <span className="inline-flex items-center gap-1 rounded-full bg-white/20 backdrop-blur-sm px-2 py-1 text-[10px] font-bold uppercase tracking-wider text-white">
+              <span className="inline-block h-1.5 w-1.5 rounded-full bg-white animate-pulse" />
+              Kasım İndirimi
+            </span>
+          </div>
+
           <div className="flex items-center justify-center gap-2 mb-2">
-            <p className="text-xs uppercase tracking-widest text-slate-400">
+            <p className="text-xs uppercase tracking-widest text-rose-200">
               {isFonProduct ? "Sabit Fiyat Aralığı" : "Tahmini Fiyat"}
             </p>
             <span className="text-xs bg-white/20 px-2 py-1 rounded-full">{unitPrice}</span>
@@ -204,22 +240,37 @@ export default function MeasurementSection({
 
           {hasRange ? (
             <div className="space-y-1">
-              <p className="text-3xl lg:text-4xl font-bold tracking-tight">
+              {/* Liste fiyatı - üstü çizili */}
+              <p className="text-lg lg:text-xl text-rose-200 line-through opacity-75">
                 {Math.round(displayMinPrice).toLocaleString("tr-TR")} -{" "}
                 {Math.round(displayMaxPrice).toLocaleString("tr-TR")} ₺
               </p>
+              {/* İndirimli fiyat */}
+              <p className="text-3xl lg:text-4xl font-bold tracking-tight">
+                {Math.round(displayOriginalMinPrice).toLocaleString("tr-TR")} -{" "}
+                {Math.round(displayOriginalMaxPrice).toLocaleString("tr-TR")} ₺
+              </p>
             </div>
           ) : (
-            <p className="text-4xl lg:text-5xl font-bold tracking-tight mb-1">
-              {Math.round(displayMinPrice).toLocaleString("tr-TR")} ₺
-            </p>
+            <div className="space-y-1">
+              {/* Liste fiyatı - üstü çizili */}
+              <p className="text-lg lg:text-xl text-rose-200 line-through opacity-75">
+                {Math.round(displayMinPrice).toLocaleString("tr-TR")} ₺
+              </p>
+              {/* İndirimli fiyat */}
+              <p className="text-4xl lg:text-5xl font-bold tracking-tight mb-1">
+                {Math.round(displayOriginalMinPrice).toLocaleString("tr-TR")} ₺
+              </p>
+            </div>
           )}
 
+          <p className="text-xs text-rose-200 mt-2 font-medium">Muhteşem Kasım İndirimi ile!</p>
+
           {!isFonProduct && !isWidthBasedProduct && (
-            <p className="text-xs text-slate-400 mt-2">Alan: {((width * height) / 10000).toFixed(2)} m²</p>
+            <p className="text-xs text-rose-200/80 mt-2">Alan: {((width * height) / 10000).toFixed(2)} m²</p>
           )}
           {isWidthBasedProduct && selectedProduct !== "Fon" && (
-            <p className="text-xs text-slate-400 mt-2">
+            <p className="text-xs text-rose-200/80 mt-2">
               {selectedProduct === "Tül" ? `${width} cm × 3 = ${width * 3} cm kumaş` : `Genişlik: ${width} cm`}
             </p>
           )}

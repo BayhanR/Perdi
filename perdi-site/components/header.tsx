@@ -105,7 +105,7 @@ export default function Header() {
             </button>
             <button
               onClick={() => router.push('/fiyat-teklifi')}
-              className={`${isTeklif ? 'bg-white text-primary' : 'text-primary-foreground/95'} border-2 border-white px-4 py-2 rounded-full transition-all hover:bg-white/10 hover:shadow-[inset_0_0_0_2px_rgba(255,255,255,1)] focus:outline-none focus-visible:outline-none focus:ring-0`}
+              className="bg-gradient-to-r from-rose-500 via-orange-500 to-amber-500 text-white px-4 py-2 rounded-full transition-all hover:from-rose-600 hover:via-orange-600 hover:to-amber-600 hover:shadow-lg focus:outline-none focus-visible:outline-none focus:ring-0 shadow-md overflow-hidden"
             >
               Fiyat Teklifi
             </button>
@@ -158,7 +158,7 @@ export default function Header() {
               </button>
               <button
                 onClick={() => router.push('/fiyat-teklifi')}
-                className={`${isTeklif ? 'bg-white text-primary' : 'text-primary-foreground/95'} border-2 border-white px-4 py-2 rounded-full transition-all hover:bg-white/10`}
+                className="bg-gradient-to-r from-rose-500 via-orange-500 to-amber-500 text-white px-4 py-2 rounded-full transition-all hover:from-rose-600 hover:via-orange-600 hover:to-amber-600 shadow-md overflow-hidden"
               >
                 Fiyat Teklifi
               </button>
