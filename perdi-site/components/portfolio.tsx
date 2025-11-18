@@ -4,39 +4,17 @@ import { useState, useEffect } from "react"
 import Image from "next/image"
 import Link from "next/link"
 
-const items = [
-  { id: 1, name: "WhatsApp Image 2025 10 23 at 15.25.58(1)", src: "/portfolio/WhatsApp Image 2025-10-23 at 15.25.58(1).jpeg" },
-  { id: 2, name: "WhatsApp Image 2025 10 23 at 15.25.58", src: "/portfolio/WhatsApp Image 2025-10-23 at 15.25.58.jpeg" },
-  { id: 3, name: "WhatsApp Image 2025 10 23 at 15.25.57(3)", src: "/portfolio/WhatsApp Image 2025-10-23 at 15.25.57(3).jpeg" },
-  { id: 4, name: "WhatsApp Image 2025 10 23 at 15.25.57(2)", src: "/portfolio/WhatsApp Image 2025-10-23 at 15.25.57(2).jpeg" },
-  { id: 5, name: "WhatsApp Image 2025 10 23 at 15.25.57(1)", src: "/portfolio/WhatsApp Image 2025-10-23 at 15.25.57(1).jpeg" },
-  { id: 6, name: "WhatsApp Image 2025 10 23 at 15.25.57", src: "/portfolio/WhatsApp Image 2025-10-23 at 15.25.57.jpeg" },
-  { id: 7, name: "WhatsApp Image 2025 10 23 at 15.25.56(3)", src: "/portfolio/WhatsApp Image 2025-10-23 at 15.25.56(3).jpeg" },
-  { id: 8, name: "WhatsApp Image 2025 10 23 at 15.25.56(2)", src: "/portfolio/WhatsApp Image 2025-10-23 at 15.25.56(2).jpeg" },
-  { id: 9, name: "WhatsApp Image 2025 10 23 at 15.25.56(1)", src: "/portfolio/WhatsApp Image 2025-10-23 at 15.25.56(1).jpeg" },
-  { id: 10, name: "WhatsApp Image 2025 10 23 at 15.25.56", src: "/portfolio/WhatsApp Image 2025-10-23 at 15.25.56.jpeg" },
-  { id: 11, name: "WhatsApp Image 2025 10 23 at 15.25.55(1)", src: "/portfolio/WhatsApp Image 2025-10-23 at 15.25.55(1).jpeg" },
-  { id: 12, name: "WhatsApp Image 2025 10 23 at 15.25.55", src: "/portfolio/WhatsApp Image 2025-10-23 at 15.25.55.jpeg" },
-  { id: 13, name: "WhatsApp Image 2025 10 23 at 15.25.54(2)", src: "/portfolio/WhatsApp Image 2025-10-23 at 15.25.54(2).jpeg" },
-  { id: 14, name: "WhatsApp Image 2025 10 23 at 15.25.54(1)", src: "/portfolio/WhatsApp Image 2025-10-23 at 15.25.54(1).jpeg" },
-  { id: 15, name: "WhatsApp Image 2025 10 23 at 15.25.54", src: "/portfolio/WhatsApp Image 2025-10-23 at 15.25.54.jpeg" },
-  { id: 16, name: "WhatsApp Image 2025 10 23 at 15.25.53(1)", src: "/portfolio/WhatsApp Image 2025-10-23 at 15.25.53(1).jpeg" },
-  { id: 17, name: "WhatsApp Image 2025 10 23 at 15.25.53", src: "/portfolio/WhatsApp Image 2025-10-23 at 15.25.53.jpeg" },
-  { id: 18, name: "WhatsApp Image 2025 10 23 at 15.25.52", src: "/portfolio/WhatsApp Image 2025-10-23 at 15.25.52.jpeg" },
-  { id: 19, name: "WhatsApp Image 2025 10 23 at 15.25.46", src: "/portfolio/WhatsApp Image 2025-10-23 at 15.25.46.jpeg" },
-  { id: 20, name: "WhatsApp Image 2025 10 23 at 15.25.44(1)", src: "/portfolio/WhatsApp Image 2025-10-23 at 15.25.44(1).jpeg" },
-  { id: 21, name: "WhatsApp Image 2025 10 23 at 15.25.44", src: "/portfolio/WhatsApp Image 2025-10-23 at 15.25.44.jpeg" },
-  { id: 22, name: "WhatsApp Image 2025 10 21 at 16.45.48", src: "/portfolio/WhatsApp Image 2025-10-21 at 16.45.48.jpeg" },
-  { id: 23, name: "WhatsApp Image 2025 10 21 at 16.45.48(2)", src: "/portfolio/WhatsApp Image 2025-10-21 at 16.45.48(2).jpeg" },
-  { id: 24, name: "WhatsApp Image 2025 10 21 at 16.45.48(1)", src: "/portfolio/WhatsApp Image 2025-10-21 at 16.45.48(1).jpeg" },
-  { id: 25, name: "WhatsApp Image 2025 10 21 at 16.45.47", src: "/portfolio/WhatsApp Image 2025-10-21 at 16.45.47.jpeg" },
-  { id: 26, name: "WhatsApp Image 2025 10 21 at 16.45.47(2)", src: "/portfolio/WhatsApp Image 2025-10-21 at 16.45.47(2).jpeg" },
-  { id: 27, name: "WhatsApp Image 2025 10 21 at 16.45.47(1)", src: "/portfolio/WhatsApp Image 2025-10-21 at 16.45.47(1).jpeg" },
-  { id: 28, name: "WhatsApp Image 2025 10 21 at 16.45.45", src: "/portfolio/WhatsApp Image 2025-10-21 at 16.45.45.jpeg" },
-]
+interface PortfolioImage {
+  name: string
+  url: string
+  uploadedAt: string
+}
 
 export default function Portfolio() {
   const [isVisible, setIsVisible] = useState(false)
+  const [images, setImages] = useState<PortfolioImage[]>([])
+  const [isLoading, setIsLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -56,7 +34,27 @@ export default function Portfolio() {
     return () => observer.disconnect()
   }, [])
 
-  const duplicatedItems = [...items, ...items, ...items]
+  useEffect(() => {
+    fetchImages()
+  }, [])
+
+  const duplicatedItems = images.length > 0 ? [...images, ...images, ...images] : []
+
+  const fetchImages = async () => {
+    try {
+      setIsLoading(true)
+      const basePath = process.env.NEXT_PUBLIC_BASE_PATH || ""
+      const response = await fetch(`${basePath}/api/portfolio-images`, { cache: "no-store" })
+      if (!response.ok) throw new Error("Görseller alınamadı")
+      const data = await response.json()
+      setImages(data.images || [])
+    } catch (err) {
+      console.error(err)
+      setError("Portfolyo görselleri yüklenemedi. Lütfen daha sonra tekrar deneyin.")
+    } finally {
+      setIsLoading(false)
+    }
+  }
 
   return (
     <section id="portfolyo" className="py-24 bg-background relative overflow-hidden">
@@ -72,23 +70,38 @@ export default function Portfolio() {
         </div>
         <div className="relative">
           <div className="overflow-hidden">
-            <div className="flex gap-6 animate-scroll hover:pause-animation">
-              {duplicatedItems.map((item, index) => (
-                <Link
-                  key={`${item.id}-${index}`}
-                  href="/galeri"
-                  className="group relative flex-shrink-0 w-80 h-80 overflow-hidden rounded-lg shadow-lg hover:shadow-2xl transition-all duration-500 hover:scale-105 cursor-pointer"
-                >
-                  <Image
-                    src={`${process.env.NEXT_PUBLIC_BASE_PATH || ''}${item.src}`}
-                    alt={item.name}
-                    fill
-                    className="object-cover transition-transform duration-500 group-hover:scale-110"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-primary/90 via-primary/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                </Link>
-              ))}
-            </div>
+            {isLoading ? (
+              <div className="flex gap-6 animate-pulse">
+                {Array.from({ length: 6 }).map((_, idx) => (
+                  <div key={idx} className="w-80 h-80 rounded-lg bg-slate-200" />
+                ))}
+              </div>
+            ) : duplicatedItems.length > 0 ? (
+              <div className="flex gap-6 animate-scroll hover:pause-animation">
+                {duplicatedItems.map((item, index) => (
+                  <Link
+                    key={`${item.url}-${index}`}
+                    href="/galeri"
+                    className="group relative flex-shrink-0 w-80 h-80 overflow-hidden rounded-lg shadow-lg hover:shadow-2xl transition-all duration-500 hover:scale-105 cursor-pointer"
+                  >
+                    <Image
+                      src={item.url}
+                      alt={item.name}
+                      fill
+                      className="object-cover transition-transform duration-500 group-hover:scale-110"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-primary/90 via-primary/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  </Link>
+                ))}
+              </div>
+            ) : (
+              <div className="flex justify-center items-center py-12">
+                <p className="text-sm text-slate-500 text-center max-w-lg">
+                  Henüz portfolyo görseli yüklenmemiş. Yönetim panelinden <code>public/uploads/portfolio</code> klasörüne fotoğraf
+                  eklediğinizde burada otomatik olarak görünecek.
+                </p>
+              </div>
+            )}
           </div>
           <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-background to-transparent pointer-events-none z-10" />
           <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-background to-transparent pointer-events-none z-10" />
@@ -96,7 +109,8 @@ export default function Portfolio() {
         <div className="text-center mt-12">
           <Link
             href="/galeri"
-            className="inline-flex items-center gap-2 px-8 py-4 bg-primary text-primary-foreground rounded-full font-semibold hover:bg-primary/90 transition-all hover:scale-105 shadow-lg"
+            className="inline-flex items-center gap-2 px-8 py-4 bg-primary text-primary-foreground rounded-full font-semibold hover:bg-primary/90 transition-all hover:scale-105 shadow-lg disabled:opacity-50"
+            aria-disabled={images.length === 0}
           >
             Tüm Projeleri Görüntüle
             <svg

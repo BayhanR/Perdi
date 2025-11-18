@@ -82,9 +82,20 @@ RESEND_TO=info@alanadiniz.com
 
 # Opsiyonel
 NEXT_TELEMETRY_DISABLED=1
+
+# BayhanTech Portal API Entegrasyonu (Portfolyo için)
+# Portal'dan yüklenen fotoğrafları göstermek için:
+BAYHAN_API_URL=https://bayhan.tech
+BAYHAN_API_TOKEN=your-token-here  # Opsiyonel, token varsa ekleyin
+USE_BAYHAN_API=true  # BayhanTech API'yi kullanmak için true yapın
+
+# VEYA dosya sisteminden okumak için (fallback):
+PORTFOLIO_IMAGE_DIR=D:\wwwroot\perdi-site\public\uploads\portfolio
+NEXT_PUBLIC_PORTFOLIO_BASE_URL=/uploads/portfolio
 ```
 
 Notlar:
-- `app/api/quote/route.ts` endpoint’i bu değişkenleri kullanarak Resend üzerinden e-posta gönderir.
+- `app/api/quote/route.ts` endpoint'i bu değişkenleri kullanarak Resend üzerinden e-posta gönderir.
 - `RESEND_FROM` için doğrulanmış bir domain kullanmanız önerilir (SPF/DKIM).
-- Alt dizinle yayın yapacaksanız `next.config.ts` içindeki `basePath` otomatik olarak `NEXT_PUBLIC_BASE_PATH`’i kullanır.
+- Alt dizinle yayın yapacaksanız `next.config.ts` içindeki `basePath` otomatik olarak `NEXT_PUBLIC_BASE_PATH`'i kullanır.
+- **Portfolyo Resimleri**: BayhanTech portal'ından yüklenen fotoğraflar otomatik olarak portfolyoda görünür. `USE_BAYHAN_API=true` yapın ve `BAYHAN_API_URL` ayarlayın.

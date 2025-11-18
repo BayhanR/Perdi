@@ -1,41 +1,39 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
-const items = [
-  { id: 1, name: "WhatsApp Image 2025 10 23 at 15.25.58(1)", src: "/portfolio/WhatsApp Image 2025-10-23 at 15.25.58(1).jpeg" },
-  { id: 2, name: "WhatsApp Image 2025 10 23 at 15.25.58", src: "/portfolio/WhatsApp Image 2025-10-23 at 15.25.58.jpeg" },
-  { id: 3, name: "WhatsApp Image 2025 10 23 at 15.25.57(3)", src: "/portfolio/WhatsApp Image 2025-10-23 at 15.25.57(3).jpeg" },
-  { id: 4, name: "WhatsApp Image 2025 10 23 at 15.25.57(2)", src: "/portfolio/WhatsApp Image 2025-10-23 at 15.25.57(2).jpeg" },
-  { id: 5, name: "WhatsApp Image 2025 10 23 at 15.25.57(1)", src: "/portfolio/WhatsApp Image 2025-10-23 at 15.25.57(1).jpeg" },
-  { id: 6, name: "WhatsApp Image 2025 10 23 at 15.25.57", src: "/portfolio/WhatsApp Image 2025-10-23 at 15.25.57.jpeg" },
-  { id: 7, name: "WhatsApp Image 2025 10 23 at 15.25.56(3)", src: "/portfolio/WhatsApp Image 2025-10-23 at 15.25.56(3).jpeg" },
-  { id: 8, name: "WhatsApp Image 2025 10 23 at 15.25.56(2)", src: "/portfolio/WhatsApp Image 2025-10-23 at 15.25.56(2).jpeg" },
-  { id: 9, name: "WhatsApp Image 2025 10 23 at 15.25.56(1)", src: "/portfolio/WhatsApp Image 2025-10-23 at 15.25.56(1).jpeg" },
-  { id: 10, name: "WhatsApp Image 2025 10 23 at 15.25.56", src: "/portfolio/WhatsApp Image 2025-10-23 at 15.25.56.jpeg" },
-  { id: 11, name: "WhatsApp Image 2025 10 23 at 15.25.55(1)", src: "/portfolio/WhatsApp Image 2025-10-23 at 15.25.55(1).jpeg" },
-  { id: 12, name: "WhatsApp Image 2025 10 23 at 15.25.55", src: "/portfolio/WhatsApp Image 2025-10-23 at 15.25.55.jpeg" },
-  { id: 13, name: "WhatsApp Image 2025 10 23 at 15.25.54(2)", src: "/portfolio/WhatsApp Image 2025-10-23 at 15.25.54(2).jpeg" },
-  { id: 14, name: "WhatsApp Image 2025 10 23 at 15.25.54(1)", src: "/portfolio/WhatsApp Image 2025-10-23 at 15.25.54(1).jpeg" },
-  { id: 15, name: "WhatsApp Image 2025 10 23 at 15.25.54", src: "/portfolio/WhatsApp Image 2025-10-23 at 15.25.54.jpeg" },
-  { id: 16, name: "WhatsApp Image 2025 10 23 at 15.25.53(1)", src: "/portfolio/WhatsApp Image 2025-10-23 at 15.25.53(1).jpeg" },
-  { id: 17, name: "WhatsApp Image 2025 10 23 at 15.25.53", src: "/portfolio/WhatsApp Image 2025-10-23 at 15.25.53.jpeg" },
-  { id: 18, name: "WhatsApp Image 2025 10 23 at 15.25.52", src: "/portfolio/WhatsApp Image 2025-10-23 at 15.25.52.jpeg" },
-  { id: 19, name: "WhatsApp Image 2025 10 23 at 15.25.46", src: "/portfolio/WhatsApp Image 2025-10-23 at 15.25.46.jpeg" },
-  { id: 20, name: "WhatsApp Image 2025 10 23 at 15.25.44(1)", src: "/portfolio/WhatsApp Image 2025-10-23 at 15.25.44(1).jpeg" },
-  { id: 21, name: "WhatsApp Image 2025 10 23 at 15.25.44", src: "/portfolio/WhatsApp Image 2025-10-23 at 15.25.44.jpeg" },
-  { id: 22, name: "WhatsApp Image 2025 10 21 at 16.45.48", src: "/portfolio/WhatsApp Image 2025-10-21 at 16.45.48.jpeg" },
-  { id: 23, name: "WhatsApp Image 2025 10 21 at 16.45.48(2)", src: "/portfolio/WhatsApp Image 2025-10-21 at 16.45.48(2).jpeg" },
-  { id: 24, name: "WhatsApp Image 2025 10 21 at 16.45.48(1)", src: "/portfolio/WhatsApp Image 2025-10-21 at 16.45.48(1).jpeg" },
-  { id: 25, name: "WhatsApp Image 2025 10 21 at 16.45.47", src: "/portfolio/WhatsApp Image 2025-10-21 at 16.45.47.jpeg" },
-  { id: 26, name: "WhatsApp Image 2025 10 21 at 16.45.47(2)", src: "/portfolio/WhatsApp Image 2025-10-21 at 16.45.47(2).jpeg" },
-  { id: 27, name: "WhatsApp Image 2025 10 21 at 16.45.47(1)", src: "/portfolio/WhatsApp Image 2025-10-21 at 16.45.47(1).jpeg" },
-  { id: 28, name: "WhatsApp Image 2025 10 21 at 16.45.45", src: "/portfolio/WhatsApp Image 2025-10-21 at 16.45.45.jpeg" },
-];
+interface PortfolioImage {
+  name: string;
+  url: string;
+  uploadedAt: string;
+}
 
 export default function GaleriPage() {
-  const [selectedImage, setSelectedImage] = useState<number | null>(null);
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [images, setImages] = useState<PortfolioImage[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchImages = async () => {
+      try {
+        setIsLoading(true);
+        const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
+        const response = await fetch(`${basePath}/api/portfolio-images`, { cache: "no-store" });
+        if (!response.ok) throw new Error("Görseller alınamadı");
+        const data = await response.json();
+        setImages(data.images || []);
+      } catch (err) {
+        console.error(err);
+        setError("Görseller yüklenemedi. Lütfen daha sonra tekrar deneyin.");
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchImages();
+  }, []);
 
   return (
     <div className="min-h-screen bg-background">
@@ -83,24 +81,37 @@ export default function GaleriPage() {
       </div>
       {/* Gallery Grid */}
       <div className="container mx-auto px-4 py-12">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {items.map((item, idx) => (
-            <div
-              key={item.id}
-              className="group relative aspect-square overflow-hidden rounded-lg shadow-lg hover:shadow-2xl transition-all duration-500 hover:scale-105 cursor-pointer animate-fade-in"
-              style={{ animationDelay: `${idx * 50}ms` }}
-              onClick={() => setSelectedImage(item.id)}
-            >
-              <Image
-                src={`${process.env.NEXT_PUBLIC_BASE_PATH || ''}${item.src}`}
-                alt={`Tezer Perde Galeri – Kemalpaşa perde örnekleri ${idx + 1}`}
-                fill
-                className="object-cover transition-transform duration-500 group-hover:scale-110"
-                priority={idx < 6}
-              />
-            </div>
-          ))}
-        </div>
+        {isLoading ? (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            {Array.from({ length: 12 }).map((_, idx) => (
+              <div key={idx} className="aspect-square rounded-lg bg-slate-200 animate-pulse" />
+            ))}
+          </div>
+        ) : images.length === 0 ? (
+          <p className="text-center text-muted-foreground">
+            Henüz fotoğraf yüklenmedi. Yönetim panelinden <code>public/uploads/portfolio</code> klasörüne görsel eklendiğinde bu
+            bölüm otomatik güncellenecek.
+          </p>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            {images.map((item, idx) => (
+              <div
+                key={item.url}
+                className="group relative aspect-square overflow-hidden rounded-lg shadow-lg hover:shadow-2xl transition-all duration-500 hover:scale-105 cursor-pointer animate-fade-in"
+                style={{ animationDelay: `${idx * 50}ms` }}
+                onClick={() => setSelectedImage(item.url)}
+              >
+                <Image
+                  src={item.url}
+                  alt={`Tezer Perde Galeri – Kemalpaşa perde örnekleri ${idx + 1}`}
+                  fill
+                  className="object-cover transition-transform duration-500 group-hover:scale-110"
+                  priority={idx < 6}
+                />
+              </div>
+            ))}
+          </div>
+        )}
       </div>
       {/* Lightbox Modal */}
       {selectedImage && (
@@ -128,12 +139,7 @@ export default function GaleriPage() {
             </svg>
           </button>
           <div className="relative w-full max-w-5xl aspect-video">
-            <Image
-              src={`${process.env.NEXT_PUBLIC_BASE_PATH || ''}${items.find((item) => item.id === selectedImage)?.src || ""}`}
-              alt={"Galeri Görseli"}
-              fill
-              className="object-contain"
-            />
+            <Image src={selectedImage} alt={"Galeri Görseli"} fill className="object-contain" />
           </div>
         </div>
       )}
